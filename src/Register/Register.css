@@ -1,0 +1,8 @@
+.Register__container {
+    border: 1px slategray solid;
+    margin: 5px;
+}
+
+.Register__form {
+    margin-block-end: 2em;
+}
