@@ -1,12 +1,8 @@
 import { Component } from 'react';
+import { NavLink } from 'react-router-dom';
+import './LandingPage.css';
 
 export default class LandingPage extends Component {
-    onClickLogin = () => {
-        console.log('Login!')
-    }
-    onClickRegister = () => {
-        console.log('Register!')
-    }
 
     render() {
         return (
@@ -19,8 +15,8 @@ export default class LandingPage extends Component {
                     A solution for sharing music with people, event if you aren't physically be on AUX.
                 </p>
 
-                <button type='button' onClick={this.onClickLogin}>Login</button>
-                <button type='button' onClick={this.onClickRegister}>Register</button>
+                <NavLink to='/login' activeClassName='Login__button-selected'><button type='button'>Login</button></NavLink>
+                <NavLink to='/register' activeClassName='Register__button-selected'><button type='button'>Register</button></NavLink>
             </div>
         )
     }
