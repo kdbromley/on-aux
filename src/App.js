@@ -6,9 +6,27 @@ import './App.css';
 import { Link, Route } from 'react-router-dom';
 
 class App extends Component {
+  state = {
+    users: [
+      {
+        username: '',
+        password: '',
+      },
+    ]
+  }
+
   onSubmitLogin(username, password) {
     console.log(username, password)
   } 
+  
+  onSubmitRegistration(user, pass) {
+    console.log(user, pass)
+    const newUser = { username: user, password: pass }
+    this.setState({
+      users: [...this.state.users, newUser]
+    })
+    console.log(this.state.users)
+  }
 
   renderRoutes() {
     return (
@@ -21,12 +39,14 @@ class App extends Component {
       <Route
        path='/login'
        render={(props) => 
-        <Login {...props} onSubmitLogin={this.onSubmitLogin} />
+        <Login {...props} handleSubmitLogin={this.onSubmitLogin} />
        }
       />
       <Route
        path='/register'
-       component={Register}
+       render={(props) => 
+        <Register {...props} handleSubmitRegistration={this.onSubmitRegistration} />
+       }
       />
      </>
     )
