@@ -4,6 +4,7 @@ import ValidationError from '../ValidationError';
 import './Register.css';
 
 export default function Register(props) {
+    const [error, setError] = useState('')
     const [usernameVal, setUsernameVal] = useState('')
     const [passVal, setPassVal] = useState('');
     const [matchVal, setMatchVal] = useState('');
@@ -12,8 +13,15 @@ export default function Register(props) {
     const [isMatchTouched, setIsMatchTouched] = useState(false);
   
 
-    const handleSubmit = (e) => {
+    const handleSubmitForm = (e) => {
         e.preventDefault();
+        const { username, pass } = e.target;
+        console.log(username.value, pass.value)
+        if (!username.value || !pass.value) {
+            setError('Username and Password are required');
+        }
+        props.history.push('/welcome')
+        props.handleSubmitRegistration(username.value, pass.value);
     }
 
     const handleUpdateUsername = (username) => {
@@ -61,7 +69,8 @@ export default function Register(props) {
       <div className='Register__container'>
           <h3>Register</h3>
         <form className='Register__form'
-          onSubmit={(e) => handleSubmit(e)}>
+          onSubmit={e => handleSubmitForm(e)}>
+              <ValidationError message={error} />
             <label htmlFor='username'>
                 Username: 
                 <input id='username' name='username' type='text' required 
@@ -70,7 +79,7 @@ export default function Register(props) {
             <ValidationError message={validateUsername()} />
             <label htmlFor='pass'>
                 Password: 
-                <input id='pass' name='password' type='text'
+                <input id='pass' name='password' type='password'
                   minLength={8} required 
                   onChange={e => handleUpdatePass(e.target.value)}/>
             </label>
