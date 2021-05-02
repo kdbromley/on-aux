@@ -1,0 +1,3 @@
+.Login__button-selected > button, .Register__button-selected > button {
+    background-color: pink;
+}
