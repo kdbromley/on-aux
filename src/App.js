@@ -1,31 +1,25 @@
-import { Component } from 'react';
+import React from 'react';
 import LandingPage from './LandingPage/LandingPage';
 import Login from './Login/Login';
 import Register from './Register/Register';
 import './App.css';
 import { Link, Route } from 'react-router-dom';
 
-class App extends Component {
+class App extends React.Component {
   state = {
-    users: [
-      {
-        username: '',
-        password: '',
-      },
-    ]
+    users: []
   }
 
-  onSubmitLogin(username, password) {
+  onSubmitLogin = (username, password) => {
     console.log(username, password)
   } 
   
-  onSubmitRegistration(user, pass) {
-    console.log(user, pass)
+  onSubmitRegistration = (user, pass) => {
     const newUser = { username: user, password: pass }
+    console.log(newUser)
     this.setState({
       users: [...this.state.users, newUser]
-    })
-    console.log(this.state.users)
+    });
   }
 
   renderRoutes() {
