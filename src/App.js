@@ -4,6 +4,9 @@ import Login from './Login/Login';
 import Register from './Register/Register';
 import './App.css';
 import { Link, Route } from 'react-router-dom';
+import ProfilePage from './ProfilePage/ProfilePage';
+import MyAccountPage from './MyAccountPage/MyAccountPage';
+import Post from './Post/Post';
 
 class App extends React.Component {
   state = {
@@ -22,7 +25,7 @@ class App extends React.Component {
     });
   }
 
-  renderRoutes() {
+  renderExteriorRoutes() {
     return (
      <>
       <Route 
@@ -45,6 +48,25 @@ class App extends React.Component {
      </>
     )
   }
+
+  renderInteriorRoutes() {
+    return(
+      <>
+      <Route 
+       path='/accounts/:accountId'
+       component={ProfilePage}
+       />
+      <Route 
+       path='/accounts/:accountId/:postId'
+       component={Post}
+      />
+      <Route 
+       path='/accounts/myAccount'
+       component={MyAccountPage}
+       />
+      </>
+    )
+  }
   
   render() {
     return (
@@ -53,7 +75,8 @@ class App extends React.Component {
           <Link to ='/'><h1>on AUX</h1></Link>
         </header>
         <main>
-          {this.renderRoutes()}
+          {this.renderExteriorRoutes()}
+          {this.renderInteriorRoutes()}
         </main>
       </div>
     );
