@@ -9,7 +9,7 @@ export default function Login(props) {
   const [isUsernameTouched, setIsUserTouched] = useState('');
   const [isPassTouched, setIsPassTouched] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmitForm = (e) => {
     e.preventDefault();
     const { username, password } = e.target;
     if (!username.value) {
@@ -18,7 +18,7 @@ export default function Login(props) {
       console.log('Password required')
     }
     //validation of if email exists => registration
-    props.onSubmitLogin(username.value, password.value)
+    props.handleSubmit(username.value, password.value)
     props.history.push('/welcome')
   }
 
@@ -52,7 +52,7 @@ export default function Login(props) {
       <div className='Login__container'>
           <h3>Login</h3>
         <form className='Login__form'
-          onSubmit={(e) => handleSubmit(e)}>
+          onSubmit={(e) => handleSubmitForm(e)}>
             <label htmlFor='username'>
                 Username: 
                 <input id='username' name='username' type='text' required
