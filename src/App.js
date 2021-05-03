@@ -1,28 +1,42 @@
 import React from 'react';
+import { Link, Route } from 'react-router-dom';
+import { STORE } from './dummy-store';
+import { v4 as uuidv4 } from 'uuid';
 import LandingPage from './LandingPage/LandingPage';
 import Login from './Login/Login';
 import Register from './Register/Register';
-import './App.css';
-import { Link, Route } from 'react-router-dom';
 import ProfilePage from './ProfilePage/ProfilePage';
 import MyAccountPage from './MyAccountPage/MyAccountPage';
 import Post from './Post/Post';
+import './App.css';
+import UsersContext from './UsersContext';
 
 class App extends React.Component {
   state = {
-    users: []
+    users: [],
+    posts: [],
+  }
+
+  componentDidMount() {
+    this.setState({ 
+      users: STORE.users,
+      posts: STORE.posts 
+    })
   }
 
   onSubmitLogin = (username, password) => {
     console.log(username, password)
   } 
   
-  onSubmitRegistration = (user, pass) => {
-    const newUser = { username: user, password: pass }
-    console.log(newUser)
+  onSubmitRegistration = (newUser) => {
+    if (!newUser.username || !newUser.password) {
+      console.error('Username or password missing')
+      return;
+    }
+    newUser.id = uuidv4()
     this.setState({
       users: [...this.state.users, newUser]
-    });
+    }, () => console.log(this.state.users));
   }
 
   renderExteriorRoutes() {
@@ -69,14 +83,21 @@ class App extends React.Component {
   }
   
   render() {
+    const usersValue = {
+      users: this.state.users,
+      registerUser: () => {},
+      loginUser: () => {},
+    }
     return (
       <div className="App">
         <header className="App-header">
           <Link to ='/'><h1>on AUX</h1></Link>
         </header>
         <main>
-          {this.renderExteriorRoutes()}
-          {this.renderInteriorRoutes()}
+          <UsersContext.Provider value={usersValue}>
+            {this.renderExteriorRoutes()}
+            {this.renderInteriorRoutes()}
+          </UsersContext.Provider>
         </main>
       </div>
     );

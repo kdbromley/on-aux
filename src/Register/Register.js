@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom'
+import UsersContext from '../UsersContext';
 import ValidationError from '../ValidationError';
 import './Register.css';
 
@@ -11,17 +12,29 @@ export default function Register(props) {
     const [isUsernameTouched, setIsUserTouched] = useState('');
     const [isPassTouched, setIsPassTouched] = useState(false);
     const [isMatchTouched, setIsMatchTouched] = useState(false);
+
+    const { users } = useContext(UsersContext);
   
 
     const handleSubmitForm = (e) => {
         e.preventDefault();
-        const { username, pass } = e.target;
+        const { username, pass, displayName } = e.target;
         console.log(username.value, pass.value)
         if (!username.value || !pass.value) {
             setError('Username and Password are required');
         }
+        if(users.find(user => user.username === username.value)) {
+            console.error('User already taken')
+            return;
+        }
+        const newUser =  {
+            username: username.value,
+            password: pass.value,
+            name: displayName.value ? displayName.value : username.value
+        }
+        
         props.history.push('/welcome')
-        props.handleSubmitRegistration(username.value, pass.value);
+        props.handleSubmitRegistration(newUser);
     }
 
     const handleUpdateUsername = (username) => {
@@ -84,13 +97,18 @@ export default function Register(props) {
                   onChange={e => handleUpdatePass(e.target.value)}/>
             </label>
              <ValidationError message={validatePass()} />
-            <label htmlFor='confirm-pass'>
+            <label htmlFor='confirmPass'>
                 Confirm Password: 
-                <input id='confirm-pass' name='password' type='password'
+                <input id='confirmPass' name='password' type='password'
                   minLength={8} required 
                   onChange={e => handleUpdateMatch(e.target.value)}/>
             </label>
                     <ValidationError message={validateMatch()} />
+
+            <label htmlFor='displayName'>
+                Display Name:
+                <input id='displayName' name='displayName' type='text' />
+            </label>
 
             <button type='submit'>Submit</button>
         </form>
