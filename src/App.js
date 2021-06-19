@@ -13,6 +13,7 @@ import UsersContext from './UsersContext';
 
 class App extends React.Component {
   state = {
+    currentUser: {},
     users: [],
     posts: [],
   }
@@ -24,8 +25,19 @@ class App extends React.Component {
     })
   }
 
-  onSubmitLogin = (username, password) => {
-    console.log(username, password)
+  validateLogin = (username) => {
+    const user = this.state.users.find(user => user.username === username)
+    if(!user) {
+      return Promise.reject;
+    } else {
+      return user;
+    }
+  }
+
+  onSubmitLogin = (user) => {
+    this.setState({
+      currentUser: user
+    })
   } 
   
   onSubmitRegistration = (newUser) => {
@@ -75,7 +87,7 @@ class App extends React.Component {
        component={Post}
       />
       <Route 
-       path='/accounts/myAccount'
+       path='/accounts/my-account'
        component={MyAccountPage}
        />
       </>
@@ -84,8 +96,10 @@ class App extends React.Component {
   
   render() {
     const usersValue = {
+      currentUser: this.state.currentUser,
       users: this.state.users,
       registerUser: () => {},
+      validateUser: this.validateLogin,
       loginUser: () => {},
     }
     return (

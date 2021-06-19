@@ -3,7 +3,7 @@ export const STORE = {
         {
             "id": 1,
             "username": "dummy-user",
-            "passord": "password",
+            "password": "password",
             "display_name": "Dummy User",
         },
     ],
