@@ -88,7 +88,9 @@ class App extends React.Component {
       />
       <Route 
        path='/accounts/my-account'
-       component={MyAccountPage}
+       render={(props) => 
+       <MyAccountPage {...props} currentUser={this.state.currentUser} />
+       }
        />
       </>
     )
