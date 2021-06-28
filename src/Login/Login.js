@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import ValidationError from '../ValidationError';
 import './Login.css';
+import UsersContext from '../UsersContext';
 
 export default function Login(props) {
   const [usernameVal, setUsernameVal] = useState('')
@@ -9,17 +10,31 @@ export default function Login(props) {
   const [isUsernameTouched, setIsUserTouched] = useState('');
   const [isPassTouched, setIsPassTouched] = useState(false);
 
+  const users = useContext(UsersContext);
+
   const handleSubmitForm = (e) => {
     e.preventDefault();
-    const { username, password } = e.target;
+    const { username, pass } = e.target;
     if (!username.value) {
       console.log('Username required')
-    } else if (!password.value) {
+    } else if (!pass.value) {
       console.log('Password required')
     }
-    //validation of if email exists => registration
-    props.handleSubmit(username.value, password.value)
-    props.history.push('/welcome')
+    const promise = new Promise(function(resolve, reject) {
+     const userResult = users.validateUser(username.value)
+      resolve(userResult)
+    })
+      .then(user => {
+        console.log(user)
+        if(user.password !== pass.value) throw new Error(`Password incorrect`)
+      })
+      .then(() => {
+        props.handleSubmitLogin(username.value, pass.value);
+        props.history.push('/accounts/my-account');
+      })
+      .catch((err) => {
+        console.error(err)
+      });
   }
 
   const handleUpdateUsername = (username) => {
@@ -61,7 +76,7 @@ export default function Login(props) {
             <ValidationError message={validateUsername()} />
             <label htmlFor='password'>
                 Password: 
-                <input id='password' name='password' type='password'
+                <input id='pass' name='password' type='password'
                   minLength={8} required 
                   onChange={e => handleUpdatePass(e.target.value)} />
             </label>
