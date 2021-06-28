@@ -10,6 +10,9 @@ import MyAccountPage from './MyAccountPage/MyAccountPage';
 import Post from './Post/Post';
 import './App.css';
 import UsersContext from './UsersContext';
+import CreatePost from './CreatePost/CreatePost';
+import SearchPage from './SearchPage/SearchPage';
+import SearchResults from './SearchResults/SearchResults';
 
 class App extends React.Component {
   state = {
@@ -91,7 +94,21 @@ class App extends React.Component {
        render={(props) => 
        <MyAccountPage {...props} currentUser={this.state.currentUser} />
        }
-       />
+      />
+      <Route
+       path='/create-post'
+       component={CreatePost}
+      />
+      <Route
+       path='/search'
+       render={(props) => 
+         <>
+         <SearchPage {...props} />
+         <SearchResults {...props} />
+         </>
+       
+      }
+      />
       </>
     )
   }
