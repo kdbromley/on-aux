@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
-import { STORE } from './dummy-store';
+import { STORE, SEARCH } from './dummy-store';
 import { v4 as uuidv4 } from 'uuid';
 import LandingPage from './LandingPage/LandingPage';
 import Login from './Login/Login';
@@ -10,6 +10,8 @@ import MyAccountPage from './MyAccountPage/MyAccountPage';
 import Post from './Post/Post';
 import './App.css';
 import UsersContext from './UsersContext';
+import SearchPage from './SearchPage/SearchPage';
+
 
 class App extends React.Component {
   state = {
@@ -91,7 +93,16 @@ class App extends React.Component {
        render={(props) => 
        <MyAccountPage {...props} currentUser={this.state.currentUser} />
        }
-       />
+      />
+      <Route
+       path='/search'
+       render={(props) => 
+         <>
+         <SearchPage {...props} search={SEARCH} />
+         </>
+       
+        }
+      />
       </>
     )
   }
