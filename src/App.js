@@ -11,6 +11,7 @@ import Post from './Post/Post';
 import './App.css';
 import UsersContext from './UsersContext';
 import SearchPage from './SearchPage/SearchPage';
+import CreatePost from './CreatePost/CreatePost';
 
 
 class App extends React.Component {
@@ -103,6 +104,10 @@ class App extends React.Component {
        
         }
       />
+      <Route
+       path='/create-post'
+       component={CreatePost}
+       />
       </>
     )
   }

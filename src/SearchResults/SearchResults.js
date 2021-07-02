@@ -1,13 +1,23 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 export default function SearchResults(props) {
     const result = props.searchResult
     return(
         <div className='SearchResult__container'>
             <img src={result.art} />
-            <h4> Title: {result.title}</h4>
-            <h4>Artist: {result.artist}</h4>
-            <h4>Album: {result.album}</h4>
+            <Link 
+              to={{
+                pathname: '/create-post',
+                state: {
+                    song: result,
+                },
+              }}
+             >
+                <h4>{result.title}</h4>
+            </Link>
+            <a><h5>{result.artist}</h5></a>
+            <a><h6>{result.album}</h6></a>
         </div>
     )
 }
