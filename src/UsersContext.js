@@ -5,6 +5,7 @@ import React from 'react';
     registerUser: () => {},
     validateUser: () => {},
     loginUser: () => {},
+    dummyPosts: [],
 })
 
 export default UsersContext;

@@ -6,11 +6,12 @@ function mapSearch(search) {
     let array = search.tracks.items;
     let tracksArray = [];
     array.map(track => {
-        let r = { artist: '', title: '', album: '', art: '' }
+        let r = { artist: '', title: '', album: '', art: '', comments: '' }
         r.artist = track.album.artists[0].name;
         r.title = track.name;
         r.album = track.album.name;
         r.art = track.album.images[1].url;
+        r.comment = '';
         tracksArray.push(r)
     })
     return tracksArray;

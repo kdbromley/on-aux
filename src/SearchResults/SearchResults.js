@@ -6,8 +6,7 @@ export default function SearchResults(props) {
     console.log(result)
     return(
         <div className='SearchResult__container'>
-            <img src={result.art} />
-            <Link 
+             <Link 
               to={{
                 pathname: '/create-post',
                 state: {
@@ -15,18 +14,11 @@ export default function SearchResults(props) {
                 },
               }}
              >
+            <img src={result.art} />
                 <h4>{result.title}</h4>
             </Link>
-            <Link
-              to={{
-                pathname: '/create-post/',
-                state: {
-                    love: 'simple',
-                }
-              }}>
                 <a><h5>{result.artist}</h5></a>
                 <a><h6>{result.album}</h6></a>
-            </Link>
             </div>
     )
 }
